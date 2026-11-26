@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>qr-p2p | Local peer network</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+<main>
+  <header><span class="eyebrow">LOCAL NETWORK / PROTOTYPE</span><h1>qr-p2p</h1>
+    <p>Two QR scans. Direct browser connections. No signaling server.</p></header>
+  <section id="start">
+    <h2>Start or join a room</h2>
+    <button id="host">Create room</button>
+    <p>Joining? Scan the host's invitation with your phone camera or paste it below.</p>
+    <label for="invite-input">Invitation URL or token</label>
+    <textarea id="invite-input" rows="3" spellcheck="false"></textarea>
+    <div class="actions"><button id="join">Join room</button><button id="scan-invite" class="secondary">Scan invitation</button></div>
+  </section>
+  <section id="session" hidden>
+    <div class="heading"><h2 id="role"></h2><button id="leave" class="secondary">Leave</button></div>
+    <p id="identity" class="mono"></p>
+    <div id="host-actions" hidden>
+      <button id="new-invite">Invite another peer</button>
+      <div id="answer-entry" hidden>
+        <p>Ask the new peer to show their answer QR code, then scan it here.</p>
+        <label for="answer-input">Answer token</label>
+        <textarea id="answer-input" rows="3" spellcheck="false"></textarea>
+        <div class="actions"><button id="scan-answer">Scan answer</button><button id="accept">Accept pasted answer</button><button id="cancel" class="secondary">Cancel invite</button></div>
+      </div>
+    </div>
+    <div id="qr-panel" hidden>
+      <h3 id="qr-title"></h3><p id="qr-help"></p>
+      <canvas id="qr" aria-label="Signaling QR code"></canvas>
+      <details><summary>Copy or inspect token</summary><textarea id="qr-text" readonly rows="4" spellcheck="false"></textarea><button id="copy" class="secondary">Copy</button></details>
+    </div>
+    <h3>Direct connections <span id="peer-count">0</span></h3>
+    <ul id="peers"></ul>
+    <p id="network-status" role="status">No direct connections yet.</p>
+    <form id="chat">
+      <label for="target">Recipient</label><select id="target"><option value="">All connected peers</option></select>
+      <label for="message">Test message</label><input id="message" maxlength="1000" required autocomplete="off">
+      <button id="send" disabled>Send</button>
+    </form>
+    <ol id="log" aria-live="polite"></ol>
+  </section>
+  <section id="scanner" hidden>
+    <div class="heading"><h2>Scan QR code</h2><button id="stop-scan" class="secondary">Close camera</button></div>
+    <video id="video" playsinline muted></video><p>Hold the complete QR code inside the camera view. Use a second screen.</p>
+  </section>
+  <p id="notice" role="status" aria-live="polite"></p>
+  <footer>Use HTTPS or localhost. Devices need a mutually reachable local network. Internet is not used for signaling; the website itself must already be loaded.</footer>
+</main>
+<script type="module" src="/src/demo.js"></script>
+</body>
+</html>

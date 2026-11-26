@@ -83,7 +83,7 @@ export class Room extends EventTarget {
       link.opened = true;
       if (this.isHost) {
         try {
-          this.wire(link, { t: "roster", peers: this.peers.filter(id => id !== link.peer) });
+          this.wire(link, { t: "roster", peers: [...this.links.values()].filter(l => l.opened && l !== link && l.channel?.readyState === "open").map(l => l.peer) });
         } catch (e) { this.fail(e); }
       }
       this.emit("peerjoin", { peer: link.peer });
